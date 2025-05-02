@@ -1,9 +1,12 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.EmployeeDto;
+import com.example.demo.entities.EmployeeEntity;
+import com.example.demo.services.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping(path= "employee")
@@ -12,14 +15,26 @@ public class EmployeeController {
 //    public String getMySuperSecretMessage(){
 //        return "heloo seceretmessage";
 //    }
+private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping(path= "/{employeeId}")
-    public EmployeeDto getEmployeeById(@PathVariable Long employeeId ){
-        return new EmployeeDto(employeeId, "Sourabh","aerosourabh92@gmail.com", 23, LocalDate.of(2024,01,02), true);
+    public EmployeeDto getEmployeeById(@PathVariable(name = "employeeId") Long employeeId ){
+        return employeeService.getEmployeeById(employeeId);
 
     }
     @GetMapping
-    public String getEmployee(@RequestParam(required = false) Integer age){
-        return "My age is"+age;
+    public List<EmployeeDto> getEmployee(@RequestParam(required = false) Integer age){
+        System.out.println("hii");
+        return employeeService.getEmployee();
+    }
+
+    @PostMapping
+    public EmployeeDto createEmployee(@RequestBody EmployeeDto inputEmployee){
+        System.out.println("hii");
+        return employeeService.createEmployee(inputEmployee);
     }
 }

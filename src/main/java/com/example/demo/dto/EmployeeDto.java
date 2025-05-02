@@ -1,7 +1,9 @@
 package com.example.demo.dto;
 
-import java.time.LocalDate;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+@Component
 public class EmployeeDto {
 
     private Long id;
